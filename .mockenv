@@ -1,0 +1,12 @@
+# edit; default values for new postgres server
+DB_NAME=postgres
+DB_USER=postgres
+DB_PASSWORD=postgres
+DB_HOST=localhost
+DB_PORT=5432
+
+# requests will be rejected without user-agent
+USER_AGENT=
+
+# metapub; get key from https://pubmed.ncbi.nlm.nih.gov for faster requests
+NCBI_API_KEY=
