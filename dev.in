@@ -1,0 +1,11 @@
+black
+flake8
+mypy
+isort
+ipython
+pip-tools
+types-requests
+pandas-stubs
+types-beautifulsoup4
+
+-r ./requirements.in
