@@ -92,11 +92,14 @@ for IC, year in (
             label = re.sub(r"[^\w\s]", "", label)
             if label in valid_listings_for_pis:
                 raw_name = head.find_next("div", attrs={"class": "pigrid"})
-                if "\xa0" in raw_name.text:
-                    name = raw_name.text.split("\xa0")[0].strip()
-                else:
-                    name = raw_name.text.strip()
-                PIs.append(name)
+                for div in raw_name.find_all("div"):
+                    div_text: str = div.text.strip()
+                    if not div_text.startswith("IRP") and len(div_text) > 0:
+                        if "\n" in div_text:
+                            test_text: str = div_text.split("\n")[0].strip()
+                        else:
+                            test_text = div_text.strip()
+                    PIs.append(test_text)
         # If no PIs, log and check later for cause
         if not PIs:
             logging.error(f"No PIS found for - IPID {ipid}\n")
