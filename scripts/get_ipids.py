@@ -19,35 +19,33 @@ error_file_path = data_path / "get_ipids_error.txt"
 # create output folder if it doesn't exist
 os.makedirs(data_path, exist_ok=True)
 
-# ICs = [
-#     "CC",
-#     "CIT",
-#     "NCATS",
-#     "NCCIH",
-#     "NCI",
-#     "NEI",
-#     "NHGRI",
-#     "NHLBI",
-#     "NIA",
-#     "NIAAA",
-#     "NIAID",
-#     "NIAMS",
-#     "NIBIB",
-#     "NICHD",
-#     "NIDA",
-#     "NIDCD",
-#     "NIDCR",
-#     "NIDDK",
-#     "NIEHS",
-#     "NIGMS",
-#     "NIMH",
-#     "NIMHD",
-#     "NINDS",
-#     "NINR",
-#     "NLM",
-# ]
-
-ICs = ["NIMH"]
+ICs = [
+    "CC",
+    "CIT",
+    "NCATS",
+    "NCCIH",
+    "NCI",
+    "NEI",
+    "NHGRI",
+    "NHLBI",
+    "NIA",
+    "NIAAA",
+    "NIAID",
+    "NIAMS",
+    "NIBIB",
+    "NICHD",
+    "NIDA",
+    "NIDCD",
+    "NIDCR",
+    "NIDDK",
+    "NIEHS",
+    "NIGMS",
+    "NIMH",
+    "NIMHD",
+    "NINDS",
+    "NINR",
+    "NLM",
+]
 
 oldest_year_data = 2023
 most_recent_year_data = 2023

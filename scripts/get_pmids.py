@@ -56,7 +56,8 @@ for IC, year in (
         print(f"IPID {i+1} of {len(ipids)}: {ipid}")
         # report url
         url = ipid_url = (
-            f"https://intramural.nih.gov/search/searchview.taf?ipid={ipid}&nidbreload=true"
+            "https://intramural.nih.gov/search/searchview.taf?"
+            + f"ipid={ipid}&nidbreload=true"
         )
 
         try:
@@ -72,7 +73,8 @@ for IC, year in (
 
         # report code / PROJECT
         contentlabel_div = soup.find("div", class_="contentlabel")
-        project = contentlabel_div.text.replace("  ", " ")
+        if contentlabel_div:
+            project = contentlabel_div.text.replace("  ", " ")
         project = project.split()[1]
 
         # PIs
