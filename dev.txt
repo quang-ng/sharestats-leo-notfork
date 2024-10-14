@@ -68,13 +68,17 @@ mypy-extensions==1.0.0
     #   black
     #   mypy
 numpy==2.1.2
-    # via pandas
+    # via
+    #   pandas
+    #   pandas-stubs
 packaging==24.1
     # via
     #   black
     #   build
 pandas==2.2.3
     # via -r ./requirements.in
+pandas-stubs==2.2.3.241009
+    # via -r dev.in
 parso==0.8.4
     # via jedi
 pathspec==0.12.1
@@ -138,6 +142,14 @@ traitlets==5.14.3
     # via
     #   ipython
     #   matplotlib-inline
+types-beautifulsoup4==4.12.0.20240907
+    # via -r dev.in
+types-html5lib==1.1.11.20240806
+    # via types-beautifulsoup4
+types-psycopg2==2.9.21.20240819
+    # via -r dev.in
+types-pytz==2024.2.0.20241003
+    # via pandas-stubs
 types-requests==2.32.0.20240914
     # via -r dev.in
 typing-extensions==4.12.2

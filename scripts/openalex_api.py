@@ -1,33 +1,37 @@
-import os
-import json
-import time
 import gzip
-import requests
-import pandas as pd
-from pathlib import Path
-from dotenv import load_dotenv
+import json
+import os
+import time
 from multiprocessing import Pool
+from pathlib import Path
+
+import pandas as pd
+import requests
+from dotenv import load_dotenv
+
+# Uncomment for single thread debugging
+# from tqdm import tqdm
 
 # .env variables
 load_dotenv()
-headers = {'User-Agent': os.getenv('USER_AGENT')}
+headers = {"User-Agent": os.getenv("USER_AGENT")}
 
-DATA_PATH = Path('../data')
-FILTERED_PMID_FILE_PATH = DATA_PATH / 'pmids_articles.csv'
-OUTPUT_FILE_PATH = DATA_PATH / 'openalex-snapshot/works'
-jsonOutput_file = OUTPUT_FILE_PATH / 'calls.jsonl.gz'
-failed_file = DATA_PATH / 'openalex_api_error.txt'
+DATA_PATH = Path("./delme_data")
+FILTERED_PMID_FILE_PATH = DATA_PATH / "pmids_articles.csv"
+OUTPUT_FILE_PATH = DATA_PATH / "openalex-snapshot/works"
+jsonOutput_file = OUTPUT_FILE_PATH / "calls.jsonl.gz"
+failed_file = DATA_PATH / "openalex_api_error.txt"
 
 # create output folder if it doesn't exist
 os.makedirs(OUTPUT_FILE_PATH, exist_ok=True)
 
 pmid_df = pd.read_csv(FILTERED_PMID_FILE_PATH)
-pmids = pmid_df['PMID'].astype('Int64').unique()
+pmids = pmid_df["PMID"].astype("Int64").unique()
 
 pmid_url = "https://api.openalex.org/works/pmid:{}"
 doi_url = "https://api.openalex.org/works/https://doi.org/{}"
-failed_calls = []
-max_retries = 3
+failed_calls: list = []
+max_retries: int = 3
 
 
 def process_pmid(pmid):
@@ -42,30 +46,37 @@ def process_pmid(pmid):
             response = requests.get(url, headers=headers)
             if response.status_code == 200:
                 json_data = response.json()
-                json_line = json.dumps(json_data) + '\n'
+                json_line = json.dumps(json_data) + "\n"
                 return json_line
             else:
                 # print(f"Failed to fetch data for {url}. Retrying...")
                 retries += 1
                 time.sleep(1)  # Wait before retrying
-        except:
+        except Exception:
             continue
 
     if retries == max_retries:
         print(f"Failed to fetch data for {url} after {max_retries} retries.")
-        with open(failed_file, 'w') as failed_calls_file:
-            failed_calls_file.write(url + '\n')
+        with open(failed_file, "w") as failed_calls_file:
+            failed_calls_file.write(url + "\n")
 
 
 if __name__ == "__main__":
     # Adjust number according to cores available
+    # TODO: should be a better way to indicate num cores
     with Pool(processes=4) as pool:
         results = pool.map(process_pmid, pmids)
 
+    # Uncomment for debugging on single thread
+    # results = []
+    # for pmid in tqdm(pmids):
+    #     result = process_pmid(pmid=pmid)
+    #     results.append(result)
+
     # Write successful results to the output file
-    with gzip.open(jsonOutput_file, 'w') as outfile:
+    with gzip.open(jsonOutput_file, "w") as outfile:
         for result in results:
             if result:
-                outfile.write(result.encode('utf-8'))
+                outfile.write(result.encode("utf-8"))
 
     print(f"Process completed. Check {failed_file} for pending calls.")

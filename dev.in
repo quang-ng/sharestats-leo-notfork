@@ -7,5 +7,6 @@ pip-tools
 types-requests
 pandas-stubs
 types-beautifulsoup4
+types-psycopg2
 
 -r ./requirements.in
