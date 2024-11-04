@@ -20,11 +20,11 @@ each row is a publication
 the cells are bools indicating which type is a pub
 """
 
-DATA_PATH: Path = Path(r"./delme_data")
-PMID_FILE_PATH: Path = DATA_PATH / "pmids_subset.csv"
-ONE_HOT_FILE_PATH: Path = DATA_PATH / "one_hot_types.csv"
-FILTERED_PMID_FILE_PATH: Path = DATA_PATH / "pmids_articles.csv"
-ERROR_FILE_PATH: Path = DATA_PATH / "get_pmids_articles_error.txt"
+DATA_PATH: Path = Path(r"./2024_all_ics")
+PMID_FILE_PATH: Path = DATA_PATH / "pmids_2024.csv"
+ONE_HOT_FILE_PATH: Path = DATA_PATH / "one_hot_types_2024.csv"
+FILTERED_PMID_FILE_PATH: Path = DATA_PATH / "pmids_articles_2024.csv"
+ERROR_FILE_PATH: Path = DATA_PATH / "get_pmids_articles_error_2024.txt"
 MAX_RETRIES: int = 10
 
 load_dotenv()  # Import NCBI_API_KEY before loading PubMedFetcher

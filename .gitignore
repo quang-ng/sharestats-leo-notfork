@@ -5,3 +5,6 @@
 __pycache__/
 .Rdata
 .env
+2024_all_ics/
+delme_data/
+concat_pmid_articles/

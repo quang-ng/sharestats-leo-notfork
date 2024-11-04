@@ -13,11 +13,11 @@ Needs ipids.csv, run get_ipids.py to generate
 Scrapes reports in search of PubMedIDs
 Saves or appends to single csv: IPID, PI, PMID, DOI, PROJECT
 """
-DATA_PATH = Path("./delme_data")
+DATA_PATH = Path("./2024_all_ics")
 assert DATA_PATH.exists()
-IPID_FILE_PATH = DATA_PATH / "ipids.csv"
-PMID_FILE_PATH = DATA_PATH / "pmids.csv"
-ERROR_LOG_FILE_PATH = DATA_PATH / "get_pmids_error.txt"
+IPID_FILE_PATH = DATA_PATH / "ipids_2024.csv"
+PMID_FILE_PATH = DATA_PATH / "pmids_2024.csv"
+ERROR_LOG_FILE_PATH = DATA_PATH / "get_pmids_error_2024.txt"
 ERROR_LOG_FILE_PATH.touch(exist_ok=True)
 
 logging.basicConfig(

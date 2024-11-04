@@ -13,7 +13,7 @@ Scrapes ipids with post requests
 Saves or appends to single csv: IC, YEAR, IPID
 error_file_path only for most recent errors
 """
-data_path = Path("./delme_data")
+data_path = Path("./2024_all_ics")
 csv_file_path = data_path / "ipids.csv"
 error_file_path = data_path / "get_ipids_error.txt"
 # create output folder if it doesn't exist
@@ -47,8 +47,8 @@ ICs = [
     "NLM",
 ]
 
-oldest_year_data = 2023
-most_recent_year_data = 2023
+oldest_year_data = 2024
+most_recent_year_data = 2024
 
 # lines that already exist in the CSV
 existing_lines = []
