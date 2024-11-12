@@ -92,3 +92,34 @@ In order to separate the develepment dependencies and the required depedencies, 
 ### psycopg2
 
 The PYPI package `psycopg2-binary` is used in `requirements.in` for compatiblity with pip-tools. This version of psycopg2 is not for production uses of POSTGRESQL. See [psycopg2-binary docs](https://pypi.org/project/psycopg2-binary/) for an explanation.
+
+### DSST-ETL
+
+Some useful commands:
+
+```
+#install uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
+# install all dependencies
+uv sync --all-extras
+# activate the virtual environment
+source .venv/bin/activate
+
+# copy the mock environment variables to the file used by docker compose and the package
+cp .mockenv .env
+
+# start the postgres server
+docker compose -f .docker/postgres-compose.yaml up -d
+
+# stop the postgres server and remove the volume with -v
+docker compose -f .docker/postgres-compose.yaml down -v
+
+# install the pre-commit hooks
+pre-commit install
+
+# run the pre-commit hooks on all files
+pre-commit run -all
+
+# run the tests
+pytest
+```
