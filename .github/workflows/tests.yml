@@ -38,7 +38,8 @@ jobs:
 
       - name: Start Docker stack
         run: |
-          docker compose -f compose.yaml -f .docker/postgres.yaml up -d
+          cp .mockenv .env
+          docker compose -f .docker/postgres-compose.yaml up -d
 
       - name: Run tests
         run: pytest tests
