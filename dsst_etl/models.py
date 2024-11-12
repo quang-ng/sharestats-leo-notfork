@@ -1,19 +1,24 @@
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, JSON, DateTime, ForeignKey, LargeBinary, Text
+
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, LargeBinary, String, Text
 from sqlalchemy.orm import relationship
 
 from .db import Base
 
 
 class Works(Base):
-    __tablename__ = 'works'
+    __tablename__ = "works"
 
     id = Column(Integer, primary_key=True)
     created_at = Column(DateTime(timezone=True), default=datetime.utcnow)
     modified_at = Column(DateTime(timezone=True), default=datetime.utcnow)
-    initial_document_id = Column(LargeBinary, ForeignKey('documents.hash'), nullable=False)
-    primary_document_hash = Column(LargeBinary, ForeignKey('documents.hash'), nullable=False)
-    provenance_id = Column(Integer, ForeignKey('provenance.id'))
+    initial_document_id = Column(
+        LargeBinary, ForeignKey("documents.hash"), nullable=False
+    )
+    primary_document_hash = Column(
+        LargeBinary, ForeignKey("documents.hash"), nullable=False
+    )
+    provenance_id = Column(Integer, ForeignKey("provenance.id"))
 
     # Relationships
     initial_document = relationship("Documents", foreign_keys=[initial_document_id])
@@ -22,13 +27,13 @@ class Works(Base):
 
 
 class Documents(Base):
-    __tablename__ = 'documents'
+    __tablename__ = "documents"
 
     hash = Column(LargeBinary, primary_key=True)
     created_at = Column(DateTime(timezone=True), default=datetime.utcnow)
     s3uri = Column(Text, nullable=False)
-    publication_id = Column(Integer, ForeignKey('publication.id'))
-    provenance_id = Column(Integer, ForeignKey('provenance.id'))
+    publication_id = Column(Integer, ForeignKey("publication.id"))
+    provenance_id = Column(Integer, ForeignKey("provenance.id"))
 
     # Relationships
     provenance = relationship("Provenance")
@@ -37,13 +42,13 @@ class Documents(Base):
 
 
 class RTransparent(Base):
-    __tablename__ = 'rtransparent'
+    __tablename__ = "rtransparent"
 
     id = Column(Integer, primary_key=True)
-    document_hash = Column(LargeBinary, ForeignKey('documents.hash'), nullable=False)
+    document_hash = Column(LargeBinary, ForeignKey("documents.hash"), nullable=False)
     created_at = Column(DateTime(timezone=True), default=datetime.utcnow)
     version = Column(String(50))
-    provenance_id = Column(Integer, ForeignKey('provenance.id'))
+    provenance_id = Column(Integer, ForeignKey("provenance.id"))
 
     # Relationships
     document = relationship("Documents", back_populates="rtransparent")
@@ -51,7 +56,7 @@ class RTransparent(Base):
 
 
 class Provenance(Base):
-    __tablename__ = 'provenance'
+    __tablename__ = "provenance"
 
     id = Column(Integer, primary_key=True)
     pipeline_name = Column(String(255))
@@ -62,12 +67,11 @@ class Provenance(Base):
 
 
 class XML(Base):
-    __tablename__ = 'xml'
+    __tablename__ = "xml"
 
     id = Column(Integer, primary_key=True)
-    document_hash = Column(LargeBinary, ForeignKey('documents.hash'), nullable=False)
+    document_hash = Column(LargeBinary, ForeignKey("documents.hash"), nullable=False)
     xml = Column(Text)
 
     # Relationships
     document = relationship("Documents", back_populates="xml")
-
