@@ -5,8 +5,23 @@ DSST ETL Package
 import os
 
 from dotenv import load_dotenv
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 load_dotenv()
+
+def get_db_engine():
+    database_url = (
+        "postgresql://"
+        f"{os.environ['POSTGRES_USER']}"
+        f":{os.environ['POSTGRES_PASSWORD']}"
+        f"@{os.environ['POSTGRES_HOST']}:"
+        f"{os.environ['POSTGRES_PORT']}"
+    )
+    return create_engine(database_url)
+
+engine = get_db_engine()
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
 def get_version():
