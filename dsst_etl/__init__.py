@@ -10,15 +10,18 @@ from sqlalchemy.orm import sessionmaker
 
 load_dotenv()
 
-def get_db_engine():
+def get_db_url():
     database_url = (
         "postgresql://"
         f"{os.environ['POSTGRES_USER']}"
         f":{os.environ['POSTGRES_PASSWORD']}"
         f"@{os.environ['POSTGRES_HOST']}:"
-        f"{os.environ['POSTGRES_PORT']}/{os.environ['POSTGRES_DB_NAME']}"
+        f"{os.environ['POSTGRES_PORT']}/{os.environ['POSTGRES_DB']}"
     )
-    return create_engine(database_url)
+    return database_url
+
+def get_db_engine():
+    return create_engine(get_db_url())
 
 engine = get_db_engine()
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

@@ -123,3 +123,44 @@ pre-commit run -all
 # run the tests
 pytest
 ```
+
+## Database Migrations
+
+This project uses Alembic for database migrations. Follow the steps below to generate and apply migrations to the database.
+
+### Prerequisites
+
+- Ensure you have Alembic installed in your Python environment. You can install it using pip:
+  ```bash
+  pip install alembic  ```
+
+- Make sure your database is running. If you're using Docker, you can start the database with:
+  ```bash
+  docker-compose -f .docker/postgres-compose.yaml up -d  ```
+
+### Running Migrations
+
+1. **Configure Alembic**: Ensure that the `alembic/env.py` file is correctly set up to connect to your database. This involves setting the SQLAlchemy URL in the `alembic.ini` file.
+
+2. **Create a New Migration**: To create a new migration script, run the following command:
+   ```bash
+   alembic revision --autogenerate -m "Description of changes"   ```
+
+   This will generate a new migration script in the `alembic/versions` directory.
+
+3. **Review the Migration Script**: Open the generated migration script and review it to ensure it accurately reflects the changes you want to make to the database schema.
+
+4. **Apply the Migration**: To apply the migration to the database, run:
+   ```bash
+   alembic upgrade head   ```
+
+   This command will apply all pending migrations up to the latest one.
+
+5. **Verify the Database**: Check your database to ensure that the schema has been updated as expected.
+
+### Troubleshooting
+
+- If you encounter any issues, ensure that your database connection settings in `alembic.ini` are correct.
+- Check the Alembic logs for any error messages that might indicate what went wrong.
+
+For more detailed information on using Alembic, refer to the [Alembic documentation](https://alembic.sqlalchemy.org/en/latest/).

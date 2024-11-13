@@ -33,7 +33,7 @@ class Documents(Base):
     hash = Column(LargeBinary, primary_key=True)
     created_at = Column(DateTime(timezone=True), default=datetime.utcnow)
     s3uri = Column(Text, nullable=False)
-    publication_id = Column(Integer, ForeignKey("publication.id"))
+    work_id = Column(Integer, ForeignKey("works.id"))
     provenance_id = Column(Integer, ForeignKey("provenance.id"))
 
     # Relationships

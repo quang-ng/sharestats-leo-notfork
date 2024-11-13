@@ -1,0 +1,30 @@
+Metadata-Version: 2.1
+Name: dsst_etl
+Version: 0.1.dev34+g6fc3d5d.d20241113
+Summary: An ETL package for data processing at DSST
+Requires-Python: >=3.11
+Requires-Dist: sqlalchemy
+Requires-Dist: psycopg2-binary
+Requires-Dist: python-dotenv
+Requires-Dist: pydantic
+Requires-Dist: alembic
+Requires-Dist: requests
+Requires-Dist: pandas
+Requires-Dist: metapub
+Requires-Dist: beautifulsoup4
+Requires-Dist: psycopg2-binary
+Requires-Dist: word2number
+Requires-Dist: pip
+Requires-Dist: pre-commit>=4.0.1
+Requires-Dist: pytest>=8.3.3
+Provides-Extra: dev
+Requires-Dist: ruff; extra == "dev"
+Requires-Dist: black; extra == "dev"
+Requires-Dist: flake8; extra == "dev"
+Requires-Dist: mypy; extra == "dev"
+Requires-Dist: isort; extra == "dev"
+Requires-Dist: ipython; extra == "dev"
+Requires-Dist: types-requests; extra == "dev"
+Requires-Dist: pandas-stubs; extra == "dev"
+Requires-Dist: types-beautifulsoup4; extra == "dev"
+Requires-Dist: types-psycopg2; extra == "dev"
