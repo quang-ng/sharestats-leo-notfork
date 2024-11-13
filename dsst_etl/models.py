@@ -3,6 +3,7 @@ from datetime import datetime
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, LargeBinary, String, Text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
 
 Base = declarative_base()
 
@@ -11,35 +12,36 @@ class Works(Base):
     __tablename__ = "works"
 
     id = Column(Integer, primary_key=True)
-    created_at = Column(DateTime(timezone=True), default=datetime.utcnow)
-    modified_at = Column(DateTime(timezone=True), default=datetime.utcnow)
+    created_at = Column(DateTime, default=func.now())
+    modified_at = Column(DateTime, default=func.now(), onupdate=func.now())
     initial_document_id = Column(
-        LargeBinary, ForeignKey("documents.hash"), nullable=False
+        Integer, ForeignKey("documents.id"), nullable=False
     )
-    primary_document_hash = Column(
-        LargeBinary, ForeignKey("documents.hash"), nullable=False
+    primary_document_id = Column(
+        Integer, ForeignKey("documents.id"), nullable=False
     )
     provenance_id = Column(Integer, ForeignKey("provenance.id"))
 
     # Relationships
-    initial_document = relationship("Documents", foreign_keys=[initial_document_id])
-    primary_document = relationship("Documents", foreign_keys=[primary_document_hash])
+    initial_document = relationship("initial_document", foreign_keys=[initial_document_id])
+    primary_document = relationship("primary_document", foreign_keys=[primary_document_id])
     provenance = relationship("Provenance")
 
 
 class Documents(Base):
     __tablename__ = "documents"
-
-    hash = Column(LargeBinary, primary_key=True)
-    created_at = Column(DateTime(timezone=True), default=datetime.utcnow)
+    
+    id = Column(Integer, primary_key=True)
+    hash = Column(LargeBinary, nullable=False, unique=True)
+    created_at = Column(DateTime, default=func.now())
     s3uri = Column(Text, nullable=False)
-    work_id = Column(Integer, ForeignKey("works.id"))
     provenance_id = Column(Integer, ForeignKey("provenance.id"))
+    work_id = Column(Integer, ForeignKey("works.id"))
 
     # Relationships
     provenance = relationship("Provenance")
-    rtransparent = relationship("RTransparent", back_populates="document")
-    xml = relationship("XML", back_populates="document")
+    work = relationship("Work")
+
 
 class Provenance(Base):
     __tablename__ = "provenance"

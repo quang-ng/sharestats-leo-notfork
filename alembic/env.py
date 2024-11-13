@@ -6,7 +6,6 @@ from alembic import context
 
 from alembic import context
 
-
 # Load environment variables from .env file
 load_dotenv()
 
@@ -24,7 +23,6 @@ config.set_main_option(
     f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
 )
 
-
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
@@ -34,11 +32,11 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-# add your model's MetaData object here
-# for 'autogenerate' support
-# from myapp import mymodel
-# target_metadata = mymodel.Base.metadata
-target_metadata = None
+# Import your models' Base class
+from dsst_etl.models import Base
+
+# Set the target_metadata to your models' MetaData
+target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
