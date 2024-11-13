@@ -1,7 +1,7 @@
 import argparse
 import sys
 from dsst_etl.extract import extract_data_from_pdf_dir
-from dsst_etl.transform import clean_data
+from dsst_etl.transform import transform_data
 from dsst_etl.load import load_data
 from dsst_etl.db import get_db_session
 from logging_config import setup_logging  # Import the logging setup function
@@ -30,7 +30,7 @@ def main():
         logger.info({"message": "Data extraction complete."})
 
         # Step 2: Transform data
-        cleaned_data = clean_data(data)
+        cleaned_data = transform_data(data)
         logger.info({"message": "Data transformation complete."})
 
         # Step 3: Load data

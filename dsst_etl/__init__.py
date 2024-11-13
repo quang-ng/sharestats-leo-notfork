@@ -16,7 +16,7 @@ def get_db_engine():
         f"{os.environ['POSTGRES_USER']}"
         f":{os.environ['POSTGRES_PASSWORD']}"
         f"@{os.environ['POSTGRES_HOST']}:"
-        f"{os.environ['POSTGRES_PORT']}"
+        f"{os.environ['POSTGRES_PORT']}/{os.environ['POSTGRES_DB_NAME']}"
     )
     return create_engine(database_url)
 
