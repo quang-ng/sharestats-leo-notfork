@@ -41,21 +41,6 @@ class Documents(Base):
     rtransparent = relationship("RTransparent", back_populates="document")
     xml = relationship("XML", back_populates="document")
 
-
-class RTransparent(Base):
-    __tablename__ = "rtransparent"
-
-    id = Column(Integer, primary_key=True)
-    document_hash = Column(LargeBinary, ForeignKey("documents.hash"), nullable=False)
-    created_at = Column(DateTime(timezone=True), default=datetime.utcnow)
-    version = Column(String(50))
-    provenance_id = Column(Integer, ForeignKey("provenance.id"))
-
-    # Relationships
-    document = relationship("Documents", back_populates="rtransparent")
-    provenance = relationship("Provenance")
-
-
 class Provenance(Base):
     __tablename__ = "provenance"
 
@@ -66,13 +51,3 @@ class Provenance(Base):
     personnel = Column(Text)
     comment = Column(Text)
 
-
-class XML(Base):
-    __tablename__ = "xml"
-
-    id = Column(Integer, primary_key=True)
-    document_hash = Column(LargeBinary, ForeignKey("documents.hash"), nullable=False)
-    xml = Column(Text)
-
-    # Relationships
-    document = relationship("Documents", back_populates="xml")
