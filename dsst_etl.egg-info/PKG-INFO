@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: dsst_etl
-Version: 0.1.dev34+g6fc3d5d.d20241113
+Version: 0.1.dev38+ga18fe81.d20241114
 Summary: An ETL package for data processing at DSST
 Requires-Python: >=3.11
 Requires-Dist: sqlalchemy
@@ -17,6 +17,7 @@ Requires-Dist: word2number
 Requires-Dist: pip
 Requires-Dist: pre-commit>=4.0.1
 Requires-Dist: pytest>=8.3.3
+Requires-Dist: boto3
 Provides-Extra: dev
 Requires-Dist: ruff; extra == "dev"
 Requires-Dist: black; extra == "dev"

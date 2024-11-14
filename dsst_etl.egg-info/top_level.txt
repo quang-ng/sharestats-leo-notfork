@@ -3,7 +3,9 @@
 alembic
 data
 dsst_etl
+pdfs
 renv
 scripts
 sql-create
+test-pdf
 tests

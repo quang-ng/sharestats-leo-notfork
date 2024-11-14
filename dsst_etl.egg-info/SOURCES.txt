@@ -8,6 +8,7 @@ alembic.ini
 logging_config.py
 pyproject.toml
 renv.lock
+uv.lock
 .docker/postgres-compose.yaml
 .github/workflows/tests.yml
 2023data/.gitattributes
@@ -25,7 +26,11 @@ renv.lock
 2023scripts/get_pmids_articles.py
 2023scripts/nimh_report.sh
 2023scripts/pdfs_download_metapub.py
+alembic/README
 alembic/env.py
+alembic/script.py.mako
+alembic/versions/8d6986c58f09_link_work_id_at_document_table.py
+alembic/versions/b386f06edbd8_initial_migration.py
 data/2019-2022_all_ICs.csv
 data/data_code_rtransparent.csv
 data/ipids.csv
@@ -37,12 +42,14 @@ data/sharestats_all_ICs.csv
 data/sharestats_backend.ipynb
 data/sharestats_nimh.csv
 dsst_etl/__init__.py
+dsst_etl/_utils.py
 dsst_etl/_version.py
 dsst_etl/db.py
 dsst_etl/extract.py
 dsst_etl/load.py
 dsst_etl/models.py
 dsst_etl/transform.py
+dsst_etl/upload_pdfs.py
 dsst_etl.egg-info/PKG-INFO
 dsst_etl.egg-info/SOURCES.txt
 dsst_etl.egg-info/dependency_links.txt
@@ -69,6 +76,7 @@ scripts/pdfs_download_metapub.py
 scripts/pdfs_to_text.py
 scripts/rtransparent.r
 scripts/rtransparent_runner.r
+scripts/run_upload_pdf_to_s3.py
 scripts/set_pivot_table.py
 scripts/xml_articles.py
 sql-create/create_sql_tables.sql
