@@ -5,7 +5,7 @@ from typing import List, Optional, Tuple
 from datetime import datetime
 import boto3
 from botocore.exceptions import ClientError
-from dsst_etl._utils import get_compute_context_id
+from dsst_etl._utils import get_compute_context_id, get_bucket_name
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from dsst_etl.models import Documents, Provenance
@@ -27,14 +27,14 @@ class PDFUploader:
     4. Linking documents to works
     """
     
-    def __init__(self, bucket_name: str):
+    def __init__(self):
         """
         Initialize the uploader with S3 bucket and database connection.
         
         Args:
             bucket_name (str): Name of the S3 bucket for PDF storage
         """
-        self.bucket_name = bucket_name
+        self.bucket_name = get_bucket_name()
         self.s3_client = boto3.client('s3')
         self.db_session = get_db_session()
         
@@ -176,7 +176,7 @@ def upload_directory(
         return
         
     
-    uploader = PDFUploader(bucket_name)
+    uploader = PDFUploader()
     
     # Upload PDFs
     successful_uploads, failed_uploads = uploader.upload_pdfs(pdf_files)
@@ -190,6 +190,9 @@ def upload_directory(
         
         # Create provenance record
         uploader.create_provenance_record(documents, comment)
+
+
+
 
 
 

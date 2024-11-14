@@ -9,3 +9,4 @@ __pycache__/
 delme_data/
 concat_pmid_articles/
 _version.py
+pdfs/*
