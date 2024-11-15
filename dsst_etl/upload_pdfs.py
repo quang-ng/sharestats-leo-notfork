@@ -2,14 +2,12 @@ import hashlib
 import os
 import logging
 from typing import List, Optional, Tuple
-from datetime import datetime
 import boto3
 from botocore.exceptions import ClientError
 from dsst_etl._utils import get_compute_context_id, get_bucket_name
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 from dsst_etl.models import Documents, Provenance
 from dsst_etl.db import get_db_session
+from pathlib import Path
 
 from dsst_etl import __version__
 
@@ -88,10 +86,8 @@ class PDFUploader:
         for pdf_path in successful_uploads:
             s3_key = f"pdfs/{os.path.basename(pdf_path)}"
             
-            # Open the file in binary mode
-            with open(pdf_path, 'rb') as file:
-                file_content = file.read()
-            
+            pdf_path = Path(pdf_path)
+            file_content = pdf_path.read_bytes()
             
             hash_data = hashlib.md5(file_content).hexdigest()
             
