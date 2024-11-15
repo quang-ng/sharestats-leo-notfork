@@ -16,6 +16,7 @@ from dsst_etl import __version__
 # Configure logging
 logger = logging.getLogger(__name__)
 
+
 class PDFUploader:
     """
     Handles PDF uploads to S3 and maintains database records of uploads.
@@ -53,9 +54,10 @@ class PDFUploader:
         
         for pdf_path in pdf_paths:
             try:
+                logger.info(f"Uploading {pdf_path} to S3")
+
                 # Generate S3 key (path in bucket)
                 s3_key = f"pdfs/{os.path.basename(pdf_path)}"
-                
                 # Upload file to S3
                 self.s3_client.upload_file(pdf_path, self.bucket_name, s3_key)
                 successful_uploads.append(pdf_path)
