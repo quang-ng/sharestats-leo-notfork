@@ -86,8 +86,15 @@ class PDFUploader:
         for pdf_path in successful_uploads:
             s3_key = f"pdfs/{os.path.basename(pdf_path)}"
             
+            # Open the file in binary mode
+            with open(pdf_path, 'rb') as file:
+                file_content = file.read()
+            
+            
+            hash_data = hashlib.md5(file_content).hexdigest()
+            
             document = Documents(
-                hash=hashlib.md5(open(pdf_path, 'rb').read()).hexdigest(),
+                hash_data=hash_data,
                 s3uri=f"s3://{self.bucket_name}/{s3_key}",
             )
             

@@ -23,24 +23,24 @@ class Works(Base):
     provenance_id = Column(Integer, ForeignKey("provenance.id"))
 
     # Relationships
-    initial_document = relationship("initial_document", foreign_keys=[initial_document_id])
-    primary_document = relationship("primary_document", foreign_keys=[primary_document_id])
-    provenance = relationship("Provenance")
+    # initial_document = relationship("Documents", back_populates="works_initial", foreign_keys=[initial_document_id])
+    # primary_document = relationship("Documents", back_populates="works_primary", foreign_keys=[primary_document_id])
+    # provenance = relationship("Provenance")
 
 
 class Documents(Base):
     __tablename__ = "documents"
     
     id = Column(Integer, primary_key=True)
-    hash = Column(LargeBinary, nullable=False, unique=True)
+    hash_data = Column(String, nullable=False, unique=True)
     created_at = Column(DateTime, default=func.now())
     s3uri = Column(Text, nullable=False)
     provenance_id = Column(Integer, ForeignKey("provenance.id"))
     work_id = Column(Integer, ForeignKey("works.id"))
 
     # Relationships
-    provenance = relationship("Provenance")
-    work = relationship("Work")
+    # provenance = relationship("Provenance")
+
 
 
 class Provenance(Base):
