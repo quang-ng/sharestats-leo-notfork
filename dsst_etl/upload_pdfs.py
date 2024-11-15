@@ -8,6 +8,7 @@ from dsst_etl._utils import get_compute_context_id, get_bucket_name
 from dsst_etl.models import Documents, Provenance
 from dsst_etl.db import get_db_session
 from pathlib import Path
+import psycopg2
 
 from dsst_etl import __version__
 
@@ -76,7 +77,6 @@ class PDFUploader:
         
         Args:
             successful_uploads (List[str]): List of successfully uploaded PDF paths
-            work_id (Optional[int]): ID of the work to link documents to
             
         Returns:
             List[Document]: List of created document records
@@ -96,10 +96,14 @@ class PDFUploader:
                 s3uri=f"s3://{self.bucket_name}/{s3_key}",
             )
             
-            self.db_session.add(document)
-            documents.append(document)
+            try:
+                self.db_session.add(document)
+                self.db_session.commit()
+                documents.append(document)
+            except psycopg2.errors.UniqueViolation:
+                self.db_session.rollback()
+                logger.warning(f"Document with hash {hash_data} already exists. Skipping.")
             
-        self.db_session.commit()
         logger.info(f"Created {len(documents)} document records")
         return documents
 
