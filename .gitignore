@@ -1,0 +1,15 @@
+.DS_Store
+.Rhistory
+.venv/
+.mypy_cache/
+__pycache__/
+.Rdata
+.env
+2024_all_ics/
+delme_data/
+concat_pmid_articles/
+_version.py
+pdfs/*
+test-pdf/*.pdf
+dsst_etl.egg-info/*
+uv.lock
